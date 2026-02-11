@@ -1,0 +1,50 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Conversation {
+  id        String   @id @default(cuid())
+  userId    String
+  createdAt DateTime @default(now())
+  messages  Message[]
+}
+
+model Message {
+  id             String   @id @default(cuid())
+  conversationId String
+  role           String
+  agentType      String?
+  content        String
+  createdAt      DateTime @default(now())
+
+  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+}
+
+model Payment {
+  id        String   @id @default(cuid())
+  userId    String
+  amount    Float
+  status    String
+  createdAt DateTime @default(now())
+}
+
+model Invoice {
+  id        String   @id @default(cuid())
+  userId    String
+  amount    Float
+  issuedAt  DateTime @default(now())
+}
+
+model Order {
+  id            String   @id @default(cuid())
+  userId        String
+  status        String
+  trackingNumber String
+  deliveryDate  DateTime
+  createdAt     DateTime @default(now())
+}
