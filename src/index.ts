@@ -1,5 +1,4 @@
 import { Hono } from "hono";
-import { serve } from "@hono/node-server";
 import chatRoutes from "./routes/chat.routes.js";
 import conversationRoutes from "./routes/conversation.routes.js";
 import agentsRoutes from "./routes/agents.routes.js";
@@ -30,9 +29,5 @@ app.get("/api/ai-test", async (c) => {
   return c.json({ reply: text });
 });
 
-serve({
-  fetch: app.fetch,
-  port: 3000,
-});
 
-console.log("Server running on http://localhost:3000");
+export default app;
